@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/gwc.css"/>
+	</head>
+	<body>
+		<div class="feel-top">
+			<div class="feel">
+				<div class="feel-left">
+					FEEL KIYOMIZUDERA
+				</div>
+				<div class="feel-right">
+					<span>首页</span> |
+					<span>SOCIAL</span> |
+					<span>EN</span>
+				</div>
+			</div>
+		</div>
+		<div class="wrap-top">
+			<div class="logo">
+				<div class="logo-left">
+					<ul>
+						<li>祈祷</li>
+						<li>四季</li>
+						<li>环境</li>
+						<li>活动</li>
+					</ul>
+				</div>
+				<div class="logo-center">
+					<img src="img/pc_logo(2).svg" width="89" height="136" />
+				</div>
+				<div class="logo-right">
+					<ul>
+						<li>历史</li>
+						<li>交通</li>
+						<li>阅读</li>
+						<li>来信</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!---->
+		<div class="gwc">
+			<div class="gwc-c">
+				<div class="shang">
+					<div class="qrdd">
+						确认订单信息
+					</div>
+				</div>
+				<div class="wrap">
+					<div class="a1">
+						<div class="a1-tu">
+							<img src="" width="128" height="128" />
+						</div>
+						<div class="a1-zi">
+							<ul>
+								<li>门票名</li>
+								<li id="mpm"></li>
+							</ul>
+						</div>
+						<div class="a1-zi2">
+							<ul>
+								<li>单价</li>
+								<li id="jg">￥199</li>
+							</ul>
+						</div>
+						<div class="a1-zi3">
+							<div class="a1-zi3-inp">
+								<input type="button" name="" id="inp1" value="-" /><input type="text" name="" id="inp2" value="" /><input type="button" name="" id="inp3" value="+" />
+		
+							</div>
+						</div>
+						<div class="a1-zi4">
+							<ul>
+								<li>小计</li>
+								<li id="zj"></li>
+							</ul>
+						</div>
+					</div>
+					<div class="ly">
+						<div class="ly-left">
+							<div class="ly-left-l">
+								<!--给卖家的留言:-->
+							</div>
+							<div class="ly-left-r">
+								<!--<input type="text" name="" id="" value="" />-->
+							</div>
+						</div>
+						<div class="ly-right">
+							<div class="ly-right-top">
+								<div class="ly-right-top-left">
+									手续费
+								</div>
+								<div class="ly-right-top-right">
+									￥1
+								</div>
+							</div>
+							<div class="ly-right-bottom">
+								<div class="ly-right-bottom-left">
+									门票总和
+								</div>
+								<div class="ly-right-bottom-right" id="zjs">
+		
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="js1">
+					<div class="js1-right">
+						<div class="js1-right-zi">
+							总和
+						</div>
+						<div class="js1-right-jg">
+		
+						</div>
+					</div>
+				</div>
+				<div class="jsinp">
+					<div class="jsinpt-1">
+						<input type="button" name="" id="" value="结算" />
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="copyright">
+			© Kiyomizu-dera Temple
+		</div>
+         <script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+         <script type="text/javascript">
+         	var data = location.href;
+			console.log(data);
+			var arr = data.split("?");
+			console.log(arr);
+			var name = arr[1];
+			console.log(name);
+			var imgId = name.substring(name.indexOf("=")+1);
+			console.log(imgId);
+         	$.ajax({
+            	type:"get",
+            	dataType:"text",
+            	async:true,
+            	url:"js/new_file.json",
+            	success:function(re){
+            		var jsonObj=JSON.parse(re);
+              		$('.a1-tu img').prop('src','img/' + jsonObj[imgId][0]);
+					$('#mpm').html(jsonObj[imgId][1]);
+					$('#jg').html(jsonObj[imgId][2]);
+					var i=1;
+					var money=jsonObj[imgId][2].substring(jsonObj[imgId][2].indexOf("￥")+1);
+					console.log(money);
+		            $('#inp1').click(function(){
+		            	i--;
+		            	if(i==0){
+		            		i=1;
+		            	}
+		            	$('#inp2').val(i);
+                        $('#zj').html(money*i);
+                        $('#zjs').html(money*i+1);
+                        $('.js1-right-jg').html(money*i+1);
+		            })
+		               $('#inp3').click(function(){
+		            	i++;
+		           
+		            	$('#inp2').val(i);
+                        $('#zj').html(money*i);
+                        $('#zjs').html(money*i+1);
+                         $('.js1-right-jg').html(money*i+1);
+		            }) 
+		                $('#inp2').change(function(){
+		                	i=$('#inp2').val();
+                            $('#zj').html(money*i);
+                            $('#zjs').html(money*i+1);
+                            $('.js1-right-jg').html(money*i+1);
+		                })
+					$('#inp2').val(i);
+					$('#zj').html(money);
+                    $('#zjs').html(money*1+1);
+                     $('.js1-right-jg').html(money*i+1);
+		            }
+           })
+         	 $('.feel-right span').eq(0).click(function(){
+					location.href = "index.html";
+			})
+         </script>
+	</body>
+</html>
